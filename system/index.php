@@ -44,22 +44,19 @@ if(isset($_POST['time_in']) && isset($_SERVER['REQUEST_URI'])) {
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
 </head>
 <body>
-<a href="logout.php" class="btn btn-primary">Logout</a>
 <form action="" method="POST" id="attendance_form" autocomplete="off">
     <label for="fullname">Employee Name:</label>
-    <input type="text" id="fullname" name="fullname" value="<?= $user->emp_name; ?>">
-    
+    <input type="text" id="fullname" name="fullname" value="<?= $user->emp_name; ?>" disabled>
+    </br>
     <label for="position">Position: </label>
-    <input type="text" id="position" name="position" value="<?= $user->emp_position; ?>">
-    
+    <input type="text" id="position" name="position" value="<?= $user->emp_position; ?>" disabled>
+    </br>
     <label for="department">Department:</label>
-    <input type="text" id="department" name="department" value="<?= $user->emp_dept; ?>">
-        
+    <input type="text" id="department" name="department" value="<?= $user->emp_dept; ?>" disabled>
+    </br>
     <label for="category">Category:</label>   
-    <input type="text" id="category" name="category" value="<?= $user->emp_category; ?>">
-    
-    <input type="text" id="start-time" name="start-time" value="<?= $user_timed_in->emp_timein; ?>" style="display:none;">
-    
+    <input type="text" id="category" name="category" value="<?= $user->emp_category; ?>" disabled>
+    </br>
     <?php
         if (is_null($user_timed_in)){
     ?>
@@ -67,11 +64,15 @@ if(isset($_POST['time_in']) && isset($_SERVER['REQUEST_URI'])) {
     <?php
         } else {
     ?>
+    <label for="Start Time">Start Time:</label>
+    <input type="text" id="start-time" name="start-time" value="<?= $user_timed_in->emp_timein; ?>" disabled>
+    </br>
         <input type="submit" name="time_out" id="time_out" value="Clock Out" />
     <?php
         }
     ?>
     
 </form>
+<a href="logout.php" class="btn btn-primary">Logout</a>
 </body>
 </html>
