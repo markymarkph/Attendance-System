@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if(!empty($_SESSION['user_id']))
+{
+    header("Location: system/index.php");
+}
+
 require ('config/db.php');
 require ('lib/functions.php');
 

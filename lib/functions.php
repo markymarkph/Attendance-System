@@ -102,14 +102,13 @@ class RunLib
         }
     }
 
-    public function CheckAttendance($user_id)
+    public function CheckAttendance($user_id, $date)
     {
         try {
-            $date = date('m/d/Y');
             $db = DB();
-            $query = $db->prepare("SELECT * FROM pmi_employees LEFT JOIN pmi_timesheet ON pmi_employees.user_id=pmi_timesheet.user_id WHERE pmi_employees.user_id=:user_id AND date=:date");
+            $query = $db->prepare("SELECT * FROM pmi_employees LEFT JOIN pmi_timesheet ON pmi_employees.user_id=pmi_timesheet.user_id WHERE pmi_employees.user_id=:user_id AND date_in=:date_in");
             $query->bindParam("user_id", $user_id, PDO::PARAM_STR);
-            $query->bindParam("date", $date, PDO::PARAM_STR);
+            $query->bindParam("date_in", $date, PDO::PARAM_STR);
             $query->execute();
             if ($query->rowCount() > 0) {
                 return $query->fetch(PDO::FETCH_OBJ);
