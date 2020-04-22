@@ -42,7 +42,7 @@ if(isset($_POST['time_in']) && isset($_SERVER['REQUEST_URI'])) {
 }
 
 
-if(isset($_POST['time_out']) && isset($_SERVER['REQUEST_URI'])) {
+if(isset($_POST['time_out']) && !empty($_POST['emp_workdone']) && isset($_SERVER['REQUEST_URI'])) {
     $workdone = $_POST['emp_workdone'];
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $statement = $conn->prepare('UPDATE pmi_timesheet SET emp_timeout=:emp_timeout, emp_workdone=:emp_workdone, date_out=:date_out WHERE user_id=:user_id AND date_in=:date_in');
@@ -62,6 +62,10 @@ if(isset($_POST['time_out']) && isset($_SERVER['REQUEST_URI'])) {
         } catch (PDOException $e) {
             die($e->getMessage());
         }
+} elseif(isset($_POST['time_out']) && empty($_POST['emp_workdone']) && isset($_SERVER['REQUEST_URI'])) {
+    echo "<script>alert('Please enter work done today!');
+        </script>";
+        //exit();
 }
 
 if(isset($_POST['update_workdone']) && isset($_SERVER['REQUEST_URI'])) {
@@ -87,9 +91,13 @@ if(isset($_POST['update_workdone']) && isset($_SERVER['REQUEST_URI'])) {
 <html>
 <head>
 <title>PMI Attendance System</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="container">
+<div class="row">
+<div class="col-md-6 offset-md-3">
 <div id="clockbox"></div>
 
 <form action="" method="POST" id="attendance_form" autocomplete="off">
@@ -108,14 +116,14 @@ if(isset($_POST['update_workdone']) && isset($_SERVER['REQUEST_URI'])) {
     <?php
         if (is_null($user_attendance)){
     ?>
-        <input type="submit" name="time_in" id="time_in" value="Clock In" />
+        <input type="submit" name="time_in" id="time_in" value="Clock In" class="btn btn-primary"/>
     <?php
         } elseif (!empty($user_attendance->emp_timeout)){
     ?>
         <label for="workdone">Work Done Today:</label>
         <textarea id="emp_workdone" name="emp_workdone" rows="4" cols="50"><?= $user_attendance->emp_workdone; ?></textarea>
         </br>
-        <input type="submit" name="update_workdone" id="update_workdone" value="Update" />
+        <input type="submit" name="update_workdone" id="update_workdone" value="Update" class="btn btn-primary"/>
     <?php
         } elseif (!empty($user_attendance->emp_timein)){
     ?>
@@ -125,7 +133,7 @@ if(isset($_POST['update_workdone']) && isset($_SERVER['REQUEST_URI'])) {
     <label for="workdone">Work Done Today:</label>
     <textarea id="emp_workdone" name="emp_workdone" rows="4" cols="50"></textarea>
     </br>
-    <input type="submit" name="time_out" id="time_out" value="Clock Out" />
+    <input type="submit" name="time_out" id="time_out" value="Clock Out" class="btn btn-primary" />
     <?php
         }
     ?>
@@ -133,7 +141,10 @@ if(isset($_POST['update_workdone']) && isset($_SERVER['REQUEST_URI'])) {
 </form>
     <label for="fullname">Employee Username:</label>
     <input type="text" id="emp_username" name="emp_username" value="<?= $user->user_name; ?>" disabled>
-<a href="logout.php" class="btn btn-primary">Logout</a>
+    <a href="logout.php" class="btn btn-primary">Logout</a>
+</div>
+</div>
+</div>
 </body>
 
 <script type="text/javascript">
@@ -153,7 +164,7 @@ if(isset($_POST['update_workdone']) && isset($_SERVER['REQUEST_URI'])) {
     if(nmin<=9) nmin="0"+nmin;
     if(nsec<=9) nsec="0"+nsec;
 
-    var clocktext="<h2>Date Today: "+tday[nday]+", "+tmonth[nmonth]+" "+ndate+", "+nyear+" </br>Current Time: "+nhour+":"+nmin+":"+nsec+ap+"</h2>";
+    var clocktext="<h3>Date Today: "+tday[nday]+", "+tmonth[nmonth]+" "+ndate+", "+nyear+" </br>Current Time: "+nhour+":"+nmin+":"+nsec+ap+"</h3>";
     document.getElementById('clockbox').innerHTML=clocktext;
     }
 

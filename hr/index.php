@@ -7,25 +7,49 @@ $db = DB();
 <html>
 <head>
     <title>HR - Viewing Reports Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<style>
+    th, td {
+        border: 1px solid;
+        padding: 5px;
+    }
+</style>
 </head>
 <body>
+<div class="container">
+    <div class="row">
+    <div class="col-md-6 offset-md-3">
     <form action="" method="POST">
-        <label for="departments">Select Department:</label>
-        <select name="departments" id="departments">
-            <option name="default" value="default" selected="selected">--Please Choose Department--</option>
-            <option name="Sales" value="Sales Department">Sales</option>
-            <option name="Operations" value="Operations Department">Operations</option>
-            <option name="Bidding" value="Bidding Department">Bidding</option>
-            <option name="Planning" value="Planning & Design Department">Planning & Design</option>
-            <option name="CSR" value="CSR Department">Corporate Social Responsibility</option>
-            <option name="IT" value="IT Department">IT</option>
-        </select>
-        <input type="date" name="start_date" id="start_date" default="<?= date(); ?>">
-        <input type="date" name="end_date" id="end_date" default="<?= date(); ?>">
+        <div class="form-group">
+            <label for="departments">Select Department:</label>
+            <select name="departments" id="departments">
+                <option name="default" value="default" selected="selected">--Please Choose Department--</option>
+                <option name="Sales" value="Sales Department">Sales</option>
+                <option name="Operations" value="Operations Department">Operations</option>
+                <option name="Bidding" value="Bidding Department">Bidding</option>
+                <option name="Planning" value="Planning & Design Department">Planning & Design</option>
+                <option name="CSR" value="CSR Department">Corporate Social Responsibility</option>
+                <option name="IT" value="IT Department">IT</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="">From Date:</label>
+            <input type="date" name="start_date" id="start_date" default="<?= date(); ?>">
 
-        <input type="submit" name="get_reports" id="get_reports" value="Get Reports" />
+            <label for="">To Date:</label>
+            <input type="date" name="end_date" id="end_date" default="<?= date(); ?>">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" name="get_reports" id="get_reports" value="Get Reports" class="btn btn-primary"/>
+        </div>
     </form>
-
+    </div>
+    </div>
+    </div>
+<div class="container">
+<div class="row">
+<div class="col-md-9 offset-md-2">
 <?php
 if (isset($_POST['get_reports'])) {
     $department = $_POST['departments'];
@@ -64,5 +88,8 @@ if (isset($_POST['get_reports'])) {
     }
 }
 ?>
+</div>
+</div>
+</div>
 </body>
 </html>

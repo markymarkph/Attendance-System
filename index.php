@@ -41,26 +41,34 @@ $register_error_message = '';
 <html>
 <head>
     <title>PMI Attendance System - Login Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-    <h4>Login</h4>
-        <?php
-            if ($login_error_message != "") {
-                echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $login_error_message . '</div>';
-            }
-            ?>
-        <form action="" method="post">
-            <div class="form-group">
-                <label for="">Username/Email</label>
-                <input type="text" name="user_name" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label for="">Password</label>
-                <input type="password" name="user_pass" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <input type="submit" name="btnLogin" class="btn btn-primary" value="Login"/>
-            </div>
-        </form>
+<div class="container">
+<div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h4>Login</h4>
+                <?php
+                    if ($login_error_message != "") {
+                        echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $login_error_message . '</div>';
+                    }
+                    ?>
+                <form action="" method="post">
+                    <div class="form-group">
+                        <label for="">Username/Email</label>
+                        <input type="text" name="user_name" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Password</label>
+                        <input type="password" name="user_pass" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="btnLogin" class="btn btn-primary" value="Login"/>
+                        <a class="btn btn-primary" href="register.php">Register</a>
+                    </div>
+                </form>
+        </div>
+</div>        
+</div>
 </body>
 </html>
