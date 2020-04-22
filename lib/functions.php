@@ -15,16 +15,20 @@ class RunLib
      * @param $name, $email, $username, $password
      * @return ID
      * */
-    public function Register($name, $email, $username, $password)
+    public function Register($fname, $lname, $password, $departments, $position, $category)
     {
         try {
+            $name = trim($fname) . ' ' . trim($lname);
+            $user_name = strtolower(substr($fname, 0, 1)) . '' . strtolower(trim($lname));
             $db = DB();
-            $query = $db->prepare("INSERT INTO users(name, email, username, password) VALUES (:name,:email,:username,:password)");
-            $query->bindParam("name", $name, PDO::PARAM_STR);
-            $query->bindParam("email", $email, PDO::PARAM_STR);
-            $query->bindParam("username", $username, PDO::PARAM_STR);
+            $query = $db->prepare("INSERT INTO pmi_employees(user_name, user_pass, emp_name, emp_position, emp_dept, emp_category) VALUES (:user_name, :user_pass, :emp_name, :emp_position, :emp_dept, :emp_category)");
+            $query->bindParam("user_name", $user_name, PDO::PARAM_STR);
             $enc_password = hash('sha256', $password);
-            $query->bindParam("password", $enc_password, PDO::PARAM_STR);
+            $query->bindParam("user_pass", $enc_password, PDO::PARAM_STR);
+            $query->bindParam("emp_name", $name, PDO::PARAM_STR);
+            $query->bindParam("emp_position", $position, PDO::PARAM_STR);
+            $query->bindParam("emp_dept", $departments, PDO::PARAM_STR);
+            $query->bindParam("emp_category", $category, PDO::PARAM_STR);
             $query->execute();
             return $db->lastInsertId();
         } catch (PDOException $e) {

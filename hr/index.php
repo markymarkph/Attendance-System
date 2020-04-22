@@ -14,6 +14,10 @@ $db = DB();
         <select name="departments" id="departments">
             <option name="default" value="default" selected="selected">--Please Choose Department--</option>
             <option name="Sales" value="Sales Department">Sales</option>
+            <option name="Operations" value="Operations Department">Operations</option>
+            <option name="Bidding" value="Bidding Department">Bidding</option>
+            <option name="Planning" value="Planning & Design Department">Planning & Design</option>
+            <option name="CSR" value="CSR Department">Corporate Social Responsibility</option>
             <option name="IT" value="IT Department">IT</option>
         </select>
         <input type="date" name="start_date" id="start_date" default="<?= date(); ?>">
@@ -29,7 +33,7 @@ if (isset($_POST['get_reports'])) {
     $end_date = $_POST['end_date'];
     try {
         $db = DB();
-        $query = $db->prepare("SELECT * FROM pmi_employees LEFT JOIN pmi_timesheet ON pmi_employees.user_id=pmi_timesheet.user_id WHERE emp_dept=:emp_dept AND date_in >= :date_in AND date_out < :date_out");
+        $query = $db->prepare("SELECT * FROM pmi_employees LEFT JOIN pmi_timesheet ON pmi_employees.user_id=pmi_timesheet.user_id WHERE emp_dept=:emp_dept AND date_in >= :date_in AND date_out <= :date_out");
         $query->bindParam("emp_dept", $department, PDO::PARAM_STR);
         $query->bindParam("date_in", $start_date, PDO::PARAM_STR);
         $query->bindParam("date_out", $end_date, PDO::PARAM_STR);

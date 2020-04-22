@@ -131,6 +131,8 @@ if(isset($_POST['update_workdone']) && isset($_SERVER['REQUEST_URI'])) {
     ?>
     
 </form>
+    <label for="fullname">Employee Username:</label>
+    <input type="text" id="emp_username" name="emp_username" value="<?= $user->user_name; ?>" disabled>
 <a href="logout.php" class="btn btn-primary">Logout</a>
 </body>
 
