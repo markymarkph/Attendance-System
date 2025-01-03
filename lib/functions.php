@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Tutorial: PHP Login Registration system
+ * PHP Login Registration system
  *
  * Page: Application library
  * */
